@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: RGB(90, 124, 171);
+}
+
+ol {
+  list-style-position: inside;
+  margin: 0;
+  padding: 0 5vw;
+}
+
+.search-input {
+  outline: none;
+  border: none;
+  background-color: RGB(247, 247, 247);
+  margin: 6vw;
+  height: 10vw;
+  width: 85vw;
+  border-radius: 5vw;
+  text-indent: 2.5rem;
+}
+
+.song-list {
+  position: relative;
+  margin: 5vw 0 10vw 5vw;
+  display: flex;
+  height: 33vw;
+}
+
+.song-list-img {
+  height: 100%;
+  border-radius: 1.5vw;
+}
+
+.up-date {
+  margin: 1.5vw;
+  position: absolute;
+  bottom: 0;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.list-more {
+  width: 60vw;
+  height: 100%;
+}
+
+.singleSong {
+  font-size: 0.9rem;
+  line-height: 11vw;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.footer {
+  color: RGB(153, 153, 153);
+  text-align: center;
+  line-height: 20vw;
+  height: 20vw;
+  font-size: 0.8rem;
+}
