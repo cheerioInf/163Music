@@ -1,31 +1,18 @@
 import { useSearchParams } from "react-router-dom"
 import { React, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './index.css'
+import SearchInput from '@/components/search-input/searchInput'
 import { v4 as uuid } from 'uuid'
 
 function Answer () {
-  const navigate = useNavigate()
-
   const [params] = useSearchParams()
   const keywords = params.get('keywords')
 
   const [data, setData] = useState([])
-  const [msg, setMsg] = useState('')
   const [list, setList] = useState([])
 
   const Highlight = ({ text, keyword }) => text.split(keyword).flatMap((str) => [<span className="highlight" key={uuid()}>{keyword}</span>, str]).slice(1)
-
-  const changeHandler = (e) => {
-    setMsg(e.target.value)
-  }
-
-  const keyHandler = (e) => {
-    if (e.keyCode === 13) {
-      navigate(`/answer?keywords=${e.target.value}`)
-    }
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,15 +30,7 @@ function Answer () {
       {/* Head */}
       <div className="header">网易云音乐</div>
       {/* 搜索 */}
-      <div>
-        <input
-          value={msg}
-          onChange={changeHandler}
-          onKeyUp={keyHandler}
-          className='search-input'
-          type="text"
-          placeholder='搜索' />
-      </div>
+      <SearchInput url={`/answer?keywords=${keywords}`} />
       {console.log(list)}
       {
         list.map((song, index) => (
@@ -60,9 +39,9 @@ function Answer () {
             <div className="song-inf">
               <div className="song-name"><Highlight text={song.name} keyword={keywords} /></div>
               <div className="song-creator">
-                <span className={song.sq ? 'song-level-logo' : 'hidden'}>SQ</span>
                 <Highlight text={song.artists.map(creator => creator.name).join('/')} keyword={keywords} />
-                -{song.album.name}
+                -
+                <Highlight text={song.album.name} keyword={keywords} />
               </div>
             </div>
             <div className="play">

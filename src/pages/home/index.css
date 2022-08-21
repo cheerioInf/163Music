@@ -1,29 +1,3 @@
-body {
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-  color: RGB(90, 124, 171);
-}
-
-ol {
-  list-style-position: inside;
-  margin: 0;
-  padding: 0 5vw;
-}
-
-.search-input {
-  outline: none;
-  border: none;
-  background-color: RGB(247, 247, 247);
-  margin: 6vw;
-  height: 10vw;
-  width: 85vw;
-  border-radius: 5vw;
-  text-indent: 2.5rem;
-}
-
 .song-list {
   position: relative;
   margin: 5vw 0 10vw 5vw;

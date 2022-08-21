@@ -1,3 +1,18 @@
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: RGB(90, 124, 171);
+}
+
+ol {
+  list-style-position: inside;
+  margin: 0;
+  padding: 0 5vw;
+}
+
 .header {
   text-align: center;
   line-height: 15vw;
@@ -5,4 +20,22 @@
   border: none;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+  outline: none;
+  border: none;
+  background-color: RGB(247, 247, 247);
+  margin: 6vw;
+  height: 10vw;
+  width: 85vw;
+  border-radius: 5vw;
+  text-indent: 2.5rem;
+  font-size: 1.1rem;
+}
+
+.search-icon {
+  position: absolute;
+  top: 24vw;
+  left: 9vw;
 }

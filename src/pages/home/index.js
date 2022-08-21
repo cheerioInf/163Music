@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 import './index.css'
+import SearchInput from '@/components/search-input/searchInput'
 import axios from 'axios'
 
 function Home () {
@@ -27,9 +28,7 @@ function Home () {
       {/* Head */}
       <div className="header">网易云音乐</div>
       {/* 搜索 */}
-      <div>
-        <input className='search-input' type="text" placeholder='搜索' onClick={() => navigate('/search')} />
-      </div>
+      <SearchInput url='/search' />
       {/* 榜单列表 */}
       {console.log(data)}
       <div>
