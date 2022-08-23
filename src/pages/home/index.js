@@ -6,13 +6,17 @@ import SearchInput from '@/components/search-input/searchInput'
 import axios from 'axios'
 
 function Home () {
-  const [data, setData] = useState([])
   const navigate = useNavigate()
 
+  // 定义状态
+  const [data, setData] = useState([])
+
+  // 跳转歌单
   const goToSongList = (id) => {
     navigate(`/list?id=${id}`)
   }
 
+  // 网络请求
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
@@ -30,7 +34,6 @@ function Home () {
       {/* 搜索 */}
       <SearchInput url='/search' />
       {/* 榜单列表 */}
-      {console.log(data)}
       <div>
         {
           Array.from(data).slice(0, 4).map(item => (
@@ -50,7 +53,7 @@ function Home () {
           ))
         }
       </div>
-      <div className='footer'>点击了解<a href="https://baidu.com">《隐私保护指引》</a></div>
+      <div className='footer'>点击了解<a href="https://st.music.163.com/official-terms/privacy">《隐私保护指引》</a></div>
     </>
   )
 }

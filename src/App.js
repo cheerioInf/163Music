@@ -4,6 +4,7 @@ import Home from '@/pages/home/index'
 import Search from '@/pages/search/index'
 import List from '@/pages/list/index'
 import Answer from '@/pages/answer/index'
+import Song from '@/pages/song/index'
 
 function App () {
   return (
@@ -14,6 +15,7 @@ function App () {
           <Route path='/search' element={<Search />}></Route>
           <Route path='/list' element={<List />}></Route>
           <Route path='/answer' element={<Answer />}></Route>
+          <Route path='/song' element={<Song />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

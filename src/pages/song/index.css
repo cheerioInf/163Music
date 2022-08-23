@@ -1,0 +1,129 @@
+.song-pic {
+  margin: 30vw 17.5vw;
+  height: 45vw;
+  width: 45vw;
+  border-radius: 35vw;
+  border: 10vw solid black;
+}
+
+.song-pic-pause {
+  animation-name: rotate;
+  animation-duration: 15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+
+.song-pic-active {
+  animation-name: rotate;
+  animation-duration: 15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pause-button {
+  margin: 70vw 42.5vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.also-like-header {
+  display: flex;
+  height: 10vw;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title {
+  font-size: 1.2rem;
+  margin: 0 3vw;
+}
+
+.header-play {
+  height: 7vw;
+  padding: 0 2vw;
+  margin: 0 3vw;
+  line-height: 7vw;
+  font-size: 0.9rem;
+  border: 0.1vw solid;
+  border-radius: 3.5vw;
+}
+
+.related-song {
+  margin: 4vw 3vw;
+  display: flex;
+}
+
+.related-pic {
+  height: 13vw;
+  width: 13vw;
+  border-radius: 1vw;
+}
+
+.related-msg {
+  margin: 1.5vw;
+}
+
+.related-song-creator {
+  height: 4vw;
+  font-size: 0.8rem;
+  width: 60vw;
+  color: rgb(135, 135, 135);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.related-song-name {
+  height: 6vw;
+  width: 60vw;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.related-none {
+  margin: 3vw;
+  color: rgb(149, 149, 149);
+}
+
+.comment-pic {
+  height: 10vw;
+  border-radius: 5vw;
+}
+
+.adm-msg {
+  display: flex;
+  margin: 5vw 3vw 0 3vw;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adm-like {
+  display: flex;
+  color: rgb(115, 115, 115);
+  margin-right: 3vw;
+}
+
+.comment-msg {
+  margin: 0 10vw 0 15vw;
+  padding: 3vw 0;
+  border-bottom: 0.5px solid rgb(210, 210, 210);
+}
+
+.adm-time {
+  margin-left: 2vw;
+  color: rgb(135, 135, 135);
+  font-size: 0.9rem;
+}
+
+.like-icon {
+  margin-left: 1vw;
+}

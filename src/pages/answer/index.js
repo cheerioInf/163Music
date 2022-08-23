@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams, useNavigate } from "react-router-dom"
 import { React, useEffect, useState } from 'react'
 import axios from 'axios'
 import './index.css'
@@ -6,20 +6,29 @@ import SearchInput from '@/components/search-input/searchInput'
 import { v4 as uuid } from 'uuid'
 
 function Answer () {
+  const navigate = useNavigate()
+
+  // 获取关键词
   const [params] = useSearchParams()
   const keywords = params.get('keywords')
 
-  const [data, setData] = useState([])
+  // 定义状态
   const [list, setList] = useState([])
 
+  // 跳转歌曲界面
+  const goToSong = (id) => {
+    navigate(`/song?id=${id}`)
+  }
+
+  // 批注高光
   const Highlight = ({ text, keyword }) => text.split(keyword).flatMap((str) => [<span className="highlight" key={uuid()}>{keyword}</span>, str]).slice(1)
 
+  // 网络请求
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
         `http://121.40.19.111:3000/search?keywords=${keywords}`,
       )
-      setData(result.data)
       setList(result.data.result.songs)
     }
     fetchData()
@@ -34,7 +43,7 @@ function Answer () {
       {console.log(list)}
       {
         list.map((song, index) => (
-          <div className="list-single-song" key={index} >
+          <div className="list-single-song" key={index} onClick={() => goToSong(song.id)}>
             <div className="rank">{list.indexOf(song) + 1}</div>
             <div className="song-inf">
               <div className="song-name"><Highlight text={song.name} keyword={keywords} /></div>

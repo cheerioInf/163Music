@@ -3,11 +3,16 @@ import { useState } from 'react'
 
 const SearchInput = ({ url }) => {
   const navigate = useNavigate()
+
+  // 定义状态
   const [msg, setMsg] = useState('')
+
+  // 受控input
   const changeHandler = (e) => {
     setMsg(e.target.value)
   }
 
+  //回车跳转
   const keyHandler = (e) => {
     if (e.keyCode === 13) {
       navigate(`/answer?keywords=${e.target.value}`)
