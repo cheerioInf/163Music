@@ -134,3 +134,11 @@
 .like-icon {
   margin-left: 1vw;
 }
+
+.lyc {
+  color: rgb(105, 105, 105);
+}
+
+.lyc-high-light {
+  background-color: red;
+}

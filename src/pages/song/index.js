@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
+import { v4 as uuid } from 'uuid'
 import axios from "axios"
 import './index.css'
 
@@ -19,14 +20,16 @@ function Song () {
   const [level, setLevel] = useState('')
   const [pause, setPause] = useState('')
   const [lyric, setLyric] = useState('')
-  const [lyricTime, setLyricTime] = useState([])
-  const [afterLyric, setAfterLyric] = useState({})
+  const [afterLyric, setAfterLyric] = useState([])
+  const [afterTime, setAfterTime] = useState([])
+  const [currentTime, setCurrentTime] = useState('')
 
   // 获取标签
   const myMp3 = React.createRef()
   const pauseButton = React.createRef()
   const pauseIcon = React.createRef()
   const startIcon = React.createRef()
+  const lycRef = React.useRef([])
 
   // 跳转歌曲页面
   const goToSong = (id) => {
@@ -38,37 +41,34 @@ function Song () {
     if (myMp3.current.paused === true) {
       myMp3.current.play()
       setPause(false)
+      judgePause()
     } else {
       myMp3.current.pause()
       setPause(true)
+      judgePause()
     }
   }
-
-  // 获取播放时间
-  useEffect(() => {
-    console.log(myMp3.current.duration)
-    console.log(myMp3.current.currentTime)
-  })
 
   // 获取歌词
   useEffect(() => {
     const lineStrings = lyric.split("\n")
-
-    lineStrings.map((item) => {
-      setLyricTime(() => {
-        let m = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[0])
-        let s = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[1])
-        let all = []
-        console.log(m, s)
-        all.push('m * 60 + s')
-        return all
-      })
+    const lycTime = lineStrings.map((item) => {
+      let m = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[0])
+      let s = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[1])
+      let t = parseInt(m * 60 + s)
+      return t
     })
-  }, [])
+    const lycContent = lineStrings.map((item) => {
+      let content = item.substring(item.indexOf("]") + 1, item.length)
+      return content
+    })
+    setAfterTime(lycTime)
+    setAfterLyric(lycContent)
+  }, [songId, songMp3])
 
   // 暂停
-  useEffect(() => {
-    if (pause) {
+  const judgePause = () => {
+    if (!pause) {
       pauseButton.current.className = "song-pic song-pic-pause"
       pauseIcon.current.className.baseVal = 'pause-button hidden'
       startIcon.current.className.baseVal = 'pause-button'
@@ -77,7 +77,7 @@ function Song () {
       pauseIcon.current.className.baseVal = 'pause-button'
       startIcon.current.className.baseVal = 'pause-button hidden'
     }
-  })
+  }
 
   // 网络请求
   useEffect(() => {
@@ -99,13 +99,23 @@ function Song () {
     fetchData()
   }, [songId])
 
+  // 获取播放时间
+  useEffect(() => {
+    // console.log(myMp3.current.currentTime)
+    // console.log(lycRef)
+  })
+
   return (
     <>
       {/* 头部标题 */}
       <div className="header">{name}</div>
 
       {/* 音源标签 */}
-      <audio src={songMp3} autoPlay="autoplay" ref={myMp3}>
+      <audio src={songMp3} autoPlay="autoplay" ref={myMp3}
+        onTimeUpdate={() => {
+          setCurrentTime(parseInt(myMp3.current.currentTime))
+        }}
+      >
         <source src={songMp3} />
       </audio>
 
@@ -122,6 +132,23 @@ function Song () {
           <path d="M713.825367 560.856612l-300.273602 150.115183a54.606992 54.606992 0 0 1-79.035298-48.856612V361.884817a54.606992 54.606992 0 0 1 79.035298-48.856612l300.273602 150.136801a54.606992 54.606992 0 0 1 0 97.713224z" p-id="1398" fill="#ffffff"></path>
           <path d="M512 1024C229.236953 1024 0 794.784665 0 512 0 229.236953 229.236953 0 512 0c282.763047 0 512 229.236953 512 512 0 282.763047-229.215335 512-512 512z m0-27.303496c267.695322 0 484.696504-217.001182 484.696504-484.674886 0-267.71694-217.001182-484.718122-484.674886-484.718122-267.71694 0-484.718122 217.001182-484.718122 484.696504s217.001182 484.696504 484.696504 484.696504z" p-id="1399" fill="#ffffff"></path>
         </svg>
+      </div>
+
+      <div>
+        {afterTime.map((time, index) => {
+          if (currentTime >= time && currentTime < afterTime[index + 1]) {
+            return <div className="lyc-high-light">
+              {afterLyric[index]}
+            </div>
+          } else {
+            return <div className="lyc">
+              {afterLyric[index]}
+            </div>
+          }
+        })}
+      </div>
+
+      <div>
       </div>
 
       {/* 相关歌曲 */}

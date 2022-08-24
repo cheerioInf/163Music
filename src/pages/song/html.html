@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>滚动歌词</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      width: 300px;
+      height: 254px;
+      border: 1px solid blanchedalmond;
+      margin: 30px auto;
+      position: relative;
+      background: url(./-363749817.jpg) no-repeat 0 54px;
+      background-size: 300px 200px;
+      color: white;
+    }
+
+    div audio {
+      width: 300px;
+    }
+
+    section {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      height: 200px;
+      margin-top: 50px;
+    }
+
+    ul {
+      width: 100%;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      transition: top .2s linear;
+    }
+
+    li {
+      list-style: none;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .active {
+      color: burlywood;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <audio src="/Users/damujiujing/Music/网易云音乐/绯村柯北 - 寸心笑傲.mp3" controls loop muted></audio>
+    <section>
+      <ul></ul>
+    </section>
+
+  </div>
+  <script>
+    var str = '作曲 : 千草仙\n[00:00.230] 作词 : 檀烧\n[00:00.690]——《寸心笑傲》——\n[00:03.490]文案：\n[00:04.302]玲珑傲骨容色俏，悠游俗世自逍遥。\n[00:08.215]亦正亦邪凭说笑，妾是乾坤光一道！\n[00:12.230]作曲/编曲：千草仙\n[00:17.458]和声/后期：不纯君\n[00:20.302]海报：祈风\n[00:21.470]\n[00:33.886]傲骨多少 清风来找\n[00:37.188]化入几分自在逍遥\n[00:40.32]磊落心肠 玲珑风貌 情义挂眉梢\n[00:45.212]路见不平 将袖一扫\n[00:48.461]平生最爱冤直有报\n[00:51.305]勇字是刀 侠字为鞘 奸佞难逃\n[00:56.231]饮糊涂酒一瓢\n[00:59.24]烹悲喜一锅吃掉\n[01:01.925]心留清明尝乾坤味道\n[01:07.102]人言滔滔 我自笑傲\n[01:09.997]痴狂何妨趁年少\n[01:12.739]名利场中睡一觉 义气台上过几招\n[01:18.376]俗事难料 舒眉一笑\n[01:21.270]管他世情如浪潮\n[01:24.63]天一角 坐看云高江湖小\n[02:15.668]是非多少 信手相抱\n[02:18.814]明月崖下牵马看潮\n[02:21.709]恩义入怀 仇怨明了 喧嚣付一笑\n[02:26.990]心在何处 琴箫相告\n[02:30.138]千山万水且走一遭\n[02:32.931]是正是邪听他说道 佐酒正好\n[02:37.857]嫌长生太无聊\n[02:40.702]将离合品入七窍\n[02:43.545]神仙来邀说时辰未到\n[02:48.725]风雨潇潇 乐也陶陶\n[02:51.568]且行遍天涯海角\n[02:54.413]任我游戏任我笑 任我琴狂剑也傲\n[03:00.49]倾心一朝 生死可抛\n[03:02.843]知己对影赏到老\n[03:05.635]风华好 心事不须他知晓\n[03:22.596]人言滔滔 我自笑傲\n[03:25.592]痴狂何妨趁年少\n[03:28.283]名利场中睡一觉 义气台上过几招\n[03:33.923]俗事难料 舒眉一笑\n[03:36.819]管他世情如浪潮\n[03:39.612]天一角 坐看云高江湖小\n[03:44.538]\n'
+    var lrc = []
+    var timer = []
+    var arr = str.split('\n')
+    var reg = /\[(\d{2}:\d{2})\.\d{2,3}\](.+)/
+    arr.forEach(function (a) {
+      if (reg.exec(a) != null) {
+        timer.push(reg.exec(a)[1])
+        lrc.push(reg.exec(a)[2])
+      }
+    })
+    var ul = document.querySelector('ul')
+    var frg = document.createDocumentFragment()
+    lrc.forEach(function (a) {
+      var li = document.createElement('li')
+      li.innerText = a
+      frg.appendChild(li)
+    })
+    ul.appendChild(frg)
+    var ad = document.querySelector('audio')
+    ad.ontimeupdate = function () {
+      var currtime = parseInt(this.currentTime)
+      var mins = parseInt(currtime / 60)
+      var secs = currtime % 60
+      if (mins < 10) mins = '0' + mins
+      if (secs < 10) secs = '0' + secs
+      var timstr = mins + ':' + secs
+      timer.forEach(function (a, i) {
+        if (a == timstr) {
+          ul.style.top = 40 - i * 20 + 'px'
+          for (var j = 0; j < ul.children.length; j++) {
+            ul.children[j].className = ''
+          }
+          ul.children[i].className = 'active'
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
