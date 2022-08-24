@@ -6,6 +6,13 @@
   border: 10vw solid black;
 }
 
+.vip-tip {
+  margin-top: 10vw;
+  width: 100vw;
+  position: absolute;
+  text-align: center;
+}
+
 .song-pic-pause {
   animation-name: rotate;
   animation-duration: 15s;

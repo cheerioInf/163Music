@@ -66,6 +66,7 @@ function List () {
               <div className="song-inf">
                 <div className="song-name">{song.name}</div>
                 <div className="song-creator">
+                  <span className={song.fee === 1 ? 'song-level-logo' : 'hidden'}>VIP</span>
                   <span className={song.sq ? 'song-level-logo' : 'hidden'}>SQ</span>
                   {song.ar.map(creator => (creator.name)).join('/')}-{song.al.name}
                 </div>

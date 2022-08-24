@@ -26,10 +26,13 @@ function Answer () {
   // 网络请求
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
+      const result1 = await axios(
         `http://121.40.19.111:3000/search?keywords=${keywords}`,
       )
-      setList(result.data.result.songs)
+      // const result2 = await axios(
+      //   `http://121.40.19.111:3000/song/detail?ids=347230`
+      // )
+      setList(result1.data.result.songs)
     }
     fetchData()
   }, [keywords])
@@ -40,14 +43,15 @@ function Answer () {
       <div className="header">网易云音乐</div>
       {/* 搜索 */}
       <SearchInput url={`/answer?keywords=${keywords}`} />
-      {console.log(list)}
       {
         list.map((song, index) => (
           <div className="list-single-song" key={index} onClick={() => goToSong(song.id)}>
             <div className="rank">{list.indexOf(song) + 1}</div>
+            {console.log(song)}
             <div className="song-inf">
               <div className="song-name"><Highlight text={song.name} keyword={keywords} /></div>
               <div className="song-creator">
+                <span className={song.fee === 1 ? 'song-level-logo' : 'hidden'}>VIP</span>
                 <Highlight text={song.artists.map(creator => creator.name).join('/')} keyword={keywords} />
                 -
                 <Highlight text={song.album.name} keyword={keywords} />

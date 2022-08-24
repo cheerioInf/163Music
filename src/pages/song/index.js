@@ -16,6 +16,11 @@ function Song () {
   const [songMp3, setSongMp3] = useState('')
   const [related, setRelated] = useState([])
   const [comment, setComment] = useState([])
+  const [level, setLevel] = useState('')
+  const [pause, setPause] = useState('')
+  const [lyric, setLyric] = useState('')
+  const [lyricTime, setLyricTime] = useState([])
+  const [afterLyric, setAfterLyric] = useState({})
 
   // 获取标签
   const myMp3 = React.createRef()
@@ -32,16 +37,47 @@ function Song () {
   const pauseMusic = () => {
     if (myMp3.current.paused === true) {
       myMp3.current.play()
-      pauseButton.current.className = "song-pic song-pic-active"
-      pauseIcon.current.className.baseVal = 'pause-button'
-      startIcon.current.className.baseVal = 'pause-button hidden'
+      setPause(false)
     } else {
       myMp3.current.pause()
+      setPause(true)
+    }
+  }
+
+  // 获取播放时间
+  useEffect(() => {
+    console.log(myMp3.current.duration)
+    console.log(myMp3.current.currentTime)
+  })
+
+  // 获取歌词
+  useEffect(() => {
+    const lineStrings = lyric.split("\n")
+
+    lineStrings.map((item) => {
+      setLyricTime(() => {
+        let m = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[0])
+        let s = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[1])
+        let all = []
+        console.log(m, s)
+        all.push('m * 60 + s')
+        return all
+      })
+    })
+  }, [])
+
+  // 暂停
+  useEffect(() => {
+    if (pause) {
       pauseButton.current.className = "song-pic song-pic-pause"
       pauseIcon.current.className.baseVal = 'pause-button hidden'
       startIcon.current.className.baseVal = 'pause-button'
+    } else {
+      pauseButton.current.className = "song-pic song-pic-active"
+      pauseIcon.current.className.baseVal = 'pause-button'
+      startIcon.current.className.baseVal = 'pause-button hidden'
     }
-  }
+  })
 
   // 网络请求
   useEffect(() => {
@@ -50,12 +86,15 @@ function Song () {
       const result2 = await axios(`http://121.40.19.111:3000/simi/song?id=${songId}`)
       const result3 = await axios(`http://121.40.19.111:3000/comment/music?id=${songId}&limit=10`)
       const result4 = await axios(`http://121.40.19.111:3000/song/url?id=${songId}`)
+      const result5 = await axios(`http://121.40.19.111:3000/lyric?id=${songId}`)
       setName(result1.data.songs[0].name)
       setPic(result1.data.songs[0].al.picUrl)
       setSongMp3(result1.data[0])
+      setLevel(result1.data.songs[0].fee)
       setComment(result3.data.hotComments)
       setRelated(result2.data.songs)
       setSongMp3(result4.data.data[0].url)
+      setLyric(result5.data.lrc.lyric)
     }
     fetchData()
   }, [songId])
@@ -69,6 +108,8 @@ function Song () {
       <audio src={songMp3} autoPlay="autoplay" ref={myMp3}>
         <source src={songMp3} />
       </audio>
+
+      {level === 1 ? <div className="vip-tip">(为收费歌曲，仅播放试听片段)</div> : <div></div>}
 
       {/* 专辑封面以及暂停按钮 */}
       <div>
