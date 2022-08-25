@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 a {
   text-decoration: none;
   color: RGB(90, 124, 171);
@@ -14,19 +18,22 @@ ol {
 }
 
 .header {
+  width: 100vw;
   text-align: center;
   line-height: 15vw;
   height: 15vw;
   border: none;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  position: fixed;
+  z-index: 999;
 }
 
 .search-input {
   outline: none;
   border: none;
   background-color: RGB(247, 247, 247);
-  margin: 6vw;
+  margin: 21vw 6vw 6vw 6vw;
   height: 10vw;
   width: 85vw;
   border-radius: 5vw;

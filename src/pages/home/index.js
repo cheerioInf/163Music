@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 import './index.css'
-import SearchInput from '@/components/search-input/searchInput'
+import SearchInput from '@/components/search-input/index'
 import axios from 'axios'
 
 function Home () {

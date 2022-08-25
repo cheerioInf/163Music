@@ -2,7 +2,8 @@ import { useSearchParams, useNavigate } from "react-router-dom"
 import { React, useEffect, useState } from 'react'
 import axios from 'axios'
 import './index.css'
-import SearchInput from '@/components/search-input/searchInput'
+import SearchInput from '@/components/search-input/index'
+import BackButton from "@/components/back-button/index"
 import { v4 as uuid } from 'uuid'
 
 function Answer () {
@@ -41,6 +42,7 @@ function Answer () {
     <>
       {/* Head */}
       <div className="header">网易云音乐</div>
+      <BackButton />
       {/* 搜索 */}
       <SearchInput url={`/answer?keywords=${keywords}`} />
       {

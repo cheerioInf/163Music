@@ -1,0 +1,36 @@
+.button {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 2vw;
+  display: flex;
+  background-color: rgba(255, 255, 255);
+  width: 30vw;
+  height: 10vw;
+  border-radius: 5vw;
+  border: 0.1vw solid rgb(180, 180, 180);
+  z-index: 1000;
+}
+
+.back-button {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vw;
+  width: 15vw;
+  line-height: 10vw;
+  border-radius: 5vw 0 0 5vw;
+  border-right: 0.3vw solid rgb(180, 180, 180);
+}
+
+.home-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 10vw;
+  width: 15vw;
+  line-height: 10vw;
+  border-radius: 0 5vw 5vw 0;
+}
