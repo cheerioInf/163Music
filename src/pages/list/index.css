@@ -132,10 +132,10 @@
 
 .song-level-logo {
   margin: 0 1vw 0 0;
-  padding: 0 1vw;
+  padding: 0.3vw 1vw;
   display: inline-block;
   line-height: 3vw;
-  height: 3vw;
+  height: 3.5vw;
   border: 1px solid RGB(234, 77, 68);
   color: RGB(234, 77, 68);
   border-radius: 0.5vw;

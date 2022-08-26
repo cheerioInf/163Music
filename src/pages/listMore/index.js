@@ -24,7 +24,6 @@ function ListMore () {
 
   return (
     <div className="background" style={{ background: `url(${pic}) center fixed` }}>
-      {/* {console.log(data)} */}
       <div className="vague-list">
         <div className="contain">
           <div className="header" >歌单</div >

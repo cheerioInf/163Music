@@ -46,7 +46,6 @@ function List () {
         <div className="header" > 歌单</div >
         <div className="vague-list">
           {/* 歌单信息 */}
-          {console.log(data)}
           <div className="all-msg">
             <img src={data.coverImgUrl} alt="" className="list-img" />
             <div className="play-count">
@@ -61,7 +60,7 @@ function List () {
                 <div className="adm-name">{adm.nickname}</div>
               </div>
               <div className="list-intro">{data.description}</div>
-              <div>(Click and check more)</div>
+              <div>(check more)</div>
             </div>
           </div>
           {/* 歌单列表 */}

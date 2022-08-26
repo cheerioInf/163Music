@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useSearchParams, Link, useNavigate } from "react-router-dom"
+import { useSearchParams, useNavigate } from "react-router-dom"
 import { v4 as uuid } from 'uuid'
 import axios from "axios"
 import BackButton from "@/components/back-button/index"
@@ -25,7 +25,6 @@ function Song () {
   const [afterTime, setAfterTime] = useState([])
   const [currentTime, setCurrentTime] = useState('')
   const [offsetTop, setOffsetTop] = useState('')
-  const [firstId, setFirstId] = useState('')
 
   // 获取标签
   const myMp3 = React.createRef()
@@ -103,7 +102,6 @@ function Song () {
       setRelated(result2.data.songs)
       setSongMp3(result4.data.data[0].url)
       setLyric(result5.data.lrc.lyric)
-      setFirstId(result2.data.songs[0].id)
     }
     fetchData()
   }, [songId])
@@ -274,7 +272,6 @@ function Song () {
             {comment.length === 0 ? <div className="related-none">暂无评论</div> :
               // 不为空，渲染评论列表
               <div className="comment-list">
-                {console.log(comment)}
                 {comment.map(comment => (
                   <div key={comment.commentId}>
                     <div className="adm-msg">
