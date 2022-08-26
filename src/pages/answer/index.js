@@ -16,6 +16,13 @@ function Answer () {
   // 定义状态
   const [list, setList] = useState([])
 
+  useEffect(() => {
+    if (localStorage.length === 0) {
+      localStorage.setItem('hs', '[]')
+    }
+    localStorage.setItem('hs', JSON.stringify([...new Set([keywords, ...JSON.parse(localStorage.getItem('hs'))])]))
+  }, [keywords])
+
   // 跳转歌曲界面
   const goToSong = (id) => {
     navigate(`/song?id=${id}`)
@@ -49,7 +56,6 @@ function Answer () {
         list.map((song, index) => (
           <div className="list-single-song" key={index} onClick={() => goToSong(song.id)}>
             <div className="rank">{list.indexOf(song) + 1}</div>
-            {console.log(song)}
             <div className="song-inf">
               <div className="song-name"><Highlight text={song.name} keyword={keywords} /></div>
               <div className="song-creator">

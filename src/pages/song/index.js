@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom"
+import { useSearchParams, Link, useNavigate } from "react-router-dom"
 import { v4 as uuid } from 'uuid'
 import axios from "axios"
 import BackButton from "@/components/back-button/index"
@@ -25,6 +25,7 @@ function Song () {
   const [afterTime, setAfterTime] = useState([])
   const [currentTime, setCurrentTime] = useState('')
   const [offsetTop, setOffsetTop] = useState('')
+  const [firstId, setFirstId] = useState('')
 
   // 获取标签
   const myMp3 = React.createRef()
@@ -55,6 +56,9 @@ function Song () {
 
   // 获取歌词
   useEffect(() => {
+    let box = document.querySelector('.lyc-box')
+    box.scrollTop = 0
+    setOffsetTop(0)
     const lineStrings = lyric.split("\n")
     const lycTime = lineStrings.map((item) => {
       let m = Number(item.substring(item.indexOf("[") + 1, item.indexOf("]")).split(':')[0])
@@ -99,6 +103,7 @@ function Song () {
       setRelated(result2.data.songs)
       setSongMp3(result4.data.data[0].url)
       setLyric(result5.data.lrc.lyric)
+      setFirstId(result2.data.songs[0].id)
     }
     fetchData()
   }, [songId])
@@ -107,7 +112,6 @@ function Song () {
   useEffect(() => {
     let top = document.querySelector('.lyc-high-light')
     let box = document.querySelector('.lyc-box')
-    console.log(box.scrollTop)
     if (top) {
       setOffsetTop(top.offsetTop)
       if (offsetTop > 580) {
@@ -115,7 +119,7 @@ function Song () {
           if (box.scrollTop >= offsetTop - 510) {
             return
           } else {
-            let speed = 5
+            let speed = 15
             box.scrollTop += speed
             requestAnimationFrame(scrollFun)
           }
@@ -130,7 +134,7 @@ function Song () {
       <div className="background" style={{ background: `url(${pic}) fixed center` }} >
         {/* 头部标题 */}
         <div className="header">
-          {name}
+          <div className="song-header-name">{name}</div>
         </div>
         <BackButton />
         <div className="vague-song">
@@ -142,6 +146,10 @@ function Song () {
           <audio src={songMp3} autoPlay="autoplay" ref={myMp3}
             onTimeUpdate={() => {
               setCurrentTime(myMp3.current.currentTime)
+            }}
+            onEnded={() => {
+              setPause(true)
+              judgePause()
             }}
           ></audio>
 
@@ -193,9 +201,45 @@ function Song () {
                 <svg t="1661414929851" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="892" width="30" height="30"><path d="M478.4 768.64a32 32 0 0 1 0-45.216l222.4-222.4-222.4-222.4a32 32 0 1 1 45.248-45.248L768.672 478.4a32 32 0 0 1 0 45.248L523.648 768.672a32 32 0 0 1-45.248 0z" fill="#ffffff" p-id="893"></path></svg>
                 <span>喜欢这首歌的人也听</span>
               </div>
-              <div className="header-play" onClick={() => goToSong(related[0].id)}>一键收听</div>
+              {/* <Link to={`/song?id=${firstId}`} replace rel="preload" className="header-play"
+              //  onClick={() => goToSong(related[0].id)}
+              >一键收听</Link> */}
+              <div className="header-play"
+                onClick={() => goToSong(related[0].id)}
+              >一键收听</div>
             </div>
-            {/* 如果为空，则暂无推荐 */}
+            {/* 如果为空，则暂无推荐
+            {related.length === 0 ? <div className="related-none">暂无推荐</div> :
+              // 不为空，渲染歌曲列表
+              <div className="also-like-list">
+                {related.map(song => (
+                  // <Link to={`/song?id=${song.id}`} replace className="related-song" key={song.id}>
+                  //   <img src={song.album.picUrl} alt="" className="related-pic" />
+                  //   <div className="related-msg">
+                  //     <div className="related-song-name">{song.name}</div>
+                  //     <div className="related-song-creator">
+                  //       {song.artists.map(creator => creator.name).join('/')}-{song.album.name}
+                  //     </div>
+                  //   </div>
+                  //   <div className="play">
+                  //     <svg t="1661075426221" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8960" width="40" height="40"><path d="M435.2 665.6V358.4l256 153.6z" p-id="8961" fill="#cdcdcd"></path><path d="M512 204.8c168.96 0 307.2 138.24 307.2 307.2s-138.24 307.2-307.2 307.2-307.2-138.24-307.2-307.2 138.24-307.2 307.2-307.2m0-51.2c-199.68 0-358.4 158.72-358.4 358.4s158.72 358.4 358.4 358.4 358.4-158.72 358.4-358.4-158.72-358.4-358.4-358.4z" p-id="8962" fill="#cdcdcd"></path></svg>
+                  //   </div>
+                  // </Link>
+                  <div className="related-song" key={song.id} onClick={goToSong(song.id)}>
+                    <img src={song.album.picUrl} alt="" className="related-pic" />
+                    <div className="related-msg">
+                      <div className="related-song-name">{song.name}</div>
+                      <div className="related-song-creator">
+                        {song.artists.map(creator => creator.name).join('/')}-{song.album.name}
+                      </div>
+                    </div>
+                    <div className="play">
+                      <svg t="1661075426221" className="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8960" width="40" height="40"><path d="M435.2 665.6V358.4l256 153.6z" p-id="8961" fill="#cdcdcd"></path><path d="M512 204.8c168.96 0 307.2 138.24 307.2 307.2s-138.24 307.2-307.2 307.2-307.2-138.24-307.2-307.2 138.24-307.2 307.2-307.2m0-51.2c-199.68 0-358.4 158.72-358.4 358.4s158.72 358.4 358.4 358.4 358.4-158.72 358.4-358.4-158.72-358.4-358.4-358.4z" p-id="8962" fill="#cdcdcd"></path></svg>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            } */}
             {related.length === 0 ? <div className="related-none">暂无推荐</div> :
               // 不为空，渲染歌曲列表
               <div className="also-like-list">
@@ -230,13 +274,17 @@ function Song () {
             {comment.length === 0 ? <div className="related-none">暂无评论</div> :
               // 不为空，渲染评论列表
               <div className="comment-list">
+                {console.log(comment)}
                 {comment.map(comment => (
                   <div key={comment.commentId}>
                     <div className="adm-msg">
                       <div className="adm">
                         <img src={comment.user.avatarUrl} alt="" className="comment-pic" />
                         <div className="adm-all">
-                          <div className="adm-name">{comment.user.nickname}</div>
+                          <div className="adm-name">
+                            <div className="nickname">{comment.user.nickname}</div>
+                            {comment.user.vipType ? <div className="black-vip"> 黑胶会员 </div> : null}
+                          </div>
                           <div className="adm-time">{comment.timeStr}</div>
                         </div>
                       </div>
@@ -253,6 +301,7 @@ function Song () {
               </div>
             }
           </div>
+          <div className="comment-tip">下载网易云音乐查看更多精彩评论</div>
         </div>
       </div>
     </>

@@ -5,6 +5,7 @@ import Search from '@/pages/search/index'
 import List from '@/pages/list/index'
 import Answer from '@/pages/answer/index'
 import Song from '@/pages/song/index'
+import ListMore from '@/pages/listMore/index'
 
 function App () {
   return (
@@ -14,6 +15,7 @@ function App () {
           <Route path='/' element={<Home />}></Route>
           <Route path='/search' element={<Search />}></Route>
           <Route path='/list' element={<List />}></Route>
+          <Route path='/listMore' element={<ListMore />}></Route>
           <Route path='/answer' element={<Answer />}></Route>
           <Route path='/song' element={<Song />}></Route>
         </Routes>

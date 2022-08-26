@@ -1,6 +1,7 @@
 .vague-list {
   backdrop-filter: blur(100px);
   background-color: rgb(0, 0, 0, 0.05);
+  height: 100vh;
 }
 
 .all-msg {
@@ -8,6 +9,19 @@
   display: flex;
   height: 60vw;
   margin: 0 0 15vw 0;
+}
+
+.play-count {
+  margin: 1vw 0 1vw -1vw;
+  position: absolute;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  height: 6vw;
+  line-height: 6vw;
+  top: 30vw;
+  left: 5vw;
+  width: 30vw;
 }
 
 .list-img {

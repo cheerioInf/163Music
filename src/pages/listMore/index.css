@@ -1,0 +1,23 @@
+.list-more-img {
+  height: 50vw;
+  margin: 25vw 25vw 5vw 25vw;
+  border-radius: 1.5vw;
+}
+
+.contain {
+  height: 100vh;
+}
+
+.list-more-name {
+  font-size: 5vw;
+  text-align: center;
+  color: white;
+  margin-bottom: 5vw;
+}
+
+.list-more-des {
+  margin: 0 10vw;
+  color: white;
+  padding: 3vw 0;
+  border-top: 0.2vw solid white;
+}
